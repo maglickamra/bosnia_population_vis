@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stanovništvo FBiH</title>
+<meta name="description" content="Interactive, hand-textured infographic of chapter 5 (population) of Federacija Bosne i Hercegovine u brojkama 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Bricolage+Grotesque:opsz,wght@12..96,400;600;800&family=Caveat:wght@700&display=swap">
+<link rel="stylesheet" href="src/base.css">
+<link rel="stylesheet" href="src/tactile.css">
+</head>
+<body>
+<!-- SVG filters: wobble (cut paper), ink (rough print), rough-line (marker) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="rough-line" x="-2%" y="-200%" width="104%" height="500%">
+    <feTurbulence type="fractalNoise" baseFrequency=".05 .4" numOctaves="2" seed="8" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="ink" x="-2%" y="-5%" width="104%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="5" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="2" result="s"/>
+    <feColorMatrix in="s" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 2.1" result="m"/>
+    <feComposite in="d" in2="m" operator="in"/>
+  </filter>
+</svg>
+<div class="wrap">
+  <div class="top">
+    <span class="brand" data-i18n="brand"></span>
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="bs" aria-pressed="false">BS</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="hero-top">
+      <div>
+        <h1 class="disp" data-i18n="title"></h1>
+        <div class="rule"></div>
+      </div>
+      <div class="hero-side">
+        <h2 class="disp" data-i18n="q"></h2>
+        <p data-i18n="lede"></p>
+        <span class="hand" data-i18n="note1"></span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="blob">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true"><path d="M60,40 C120,-12 235,8 285,52 C352,102 412,122 382,192 C350,262 262,302 180,286 C90,270 22,250 14,170 C8,108 22,70 60,40Z"/></svg>
+        <div class="big disp num" id="popBig"></div>
+        <div class="cap" id="popCap"></div>
+      </div>
+      <ul class="facts" id="facts"></ul>
+    </div>
+  </header>
+
+  <section class="blk" id="s1">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s1tag"></span>
+      <h2 class="disp" data-i18n="s1t"></h2>
+      <p data-i18n="s1l"></p>
+    </div>
+    <div class="seg metrics" id="metrics" role="group"></div>
+    <span class="hand rose-note" data-i18n="note2"></span>
+    <div class="rose-wrap">
+      <svg id="rose" viewBox="0 0 940 780" role="group"></svg>
+      <div>
+        <div class="readout" id="readout" aria-live="polite"></div>
+        <div class="chipgrid" id="chipgrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="s2">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s2tag"></span>
+      <h2 class="disp" data-i18n="s2t"></h2>
+      <p data-i18n="s2l"></p>
+    </div>
+    <ul class="legend" id="ageLegend"></ul>
+    <div class="agerows" id="agerows"></div>
+  </section>
+
+  <section class="blk" id="s3">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s3tag"></span>
+      <h2 class="disp" data-i18n="s3t"></h2>
+      <p data-i18n="s3l"></p>
+    </div>
+    <div class="pyr-head"><span id="pyrF"></span><span></span><span id="pyrM"></span></div>
+    <div class="pyr" id="pyr"></div>
+    <p class="note" data-i18n="s3n"></p>
+  </section>
+
+  <section class="blk" id="s4">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s4tag"></span>
+      <h2 class="disp" data-i18n="s4t"></h2>
+      <p data-i18n="s4l"></p>
+    </div>
+    <div class="chips yearchips" data-chips></div>
+    <div class="two" style="margin-top:20px">
+      <div class="chart">
+        <ul class="legend" id="moveLegend"></ul>
+        <div id="moveChart"></div>
+      </div>
+      <div class="ledger" id="ledger"></div>
+    </div>
+  </section>
+
+  <section class="blk" id="s5">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s5tag"></span>
+      <h2 class="disp" data-i18n="s5t"></h2>
+      <p data-i18n="s5l"></p>
+    </div>
+    <div class="chips yearchips" data-chips></div>
+    <div class="two" style="margin-top:20px">
+      <div class="chart" id="ageLine"></div>
+      <div class="splits" id="splits"></div>
+    </div>
+  </section>
+
+  <section class="blk" id="s6">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s6tag"></span>
+      <h2 class="disp" data-i18n="s6t"></h2>
+      <p id="s6l"></p>
+    </div>
+    <div class="names">
+      <div><h3 id="nameB"></h3><ol class="nl" id="listB"></ol></div>
+      <div><h3 id="nameG"></h3><ol class="nl" id="listG"></ol></div>
+    </div>
+  </section>
+
+  <section class="blk" id="s7">
+    <div class="blk-head">
+      <span class="tag" data-i18n="s7tag"></span>
+      <h2 class="disp" data-i18n="s7t"></h2>
+      <p id="s7l"></p>
+    </div>
+    <div class="chips yearchips" data-chips></div>
+    <div class="chart" style="margin-top:20px;max-width:640px">
+      <ul class="legend" id="migLegend"></ul>
+      <div id="migChart"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p data-i18n="fsrc"></p>
+    <p data-i18n="fnote"></p>
+    <p data-i18n="fcc"></p>
+  </footer>
+</div>
+
+
+<script src="src/app.js"></script>
+</body>
+</html>
