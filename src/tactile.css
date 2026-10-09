@@ -91,3 +91,7 @@ html,body{overflow-x:clip}
 .readout::after{filter:url(#print)}
 /* halftone dots on pink wedge side and hero rule */
 .rule{background-image:radial-gradient(circle,#0003 1px,transparent 1.5px);background-size:6px 6px;background-color:var(--hot)}
+
+/* Bosnian title (STANOVNIŠTVO, 12 letters) is longer than POPULATION (10): smaller size so it fits */
+html[lang="bs"] .hero h1{font-size:clamp(34px,15.5cqw,200px)}
+@media (min-width:900px){html[lang="bs"] .hero h1{font-size:clamp(46px,15.5cqw,200px)}}
