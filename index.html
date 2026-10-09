@@ -18,6 +18,16 @@
     <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
+  <filter id="print" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="7" result="g"/>
+    <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -4.2 3.05" result="m"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="2" seed="11" result="b"/>
+    <feColorMatrix in="b" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 2.1" result="bm"/>
+    <feComposite in="d" in2="m" operator="in" result="s"/>
+    <feComposite in="s" in2="bm" operator="in"/>
+  </filter>
   <filter id="rough-line" x="-2%" y="-200%" width="104%" height="500%">
     <feTurbulence type="fractalNoise" baseFrequency=".05 .4" numOctaves="2" seed="8" result="n"/>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
