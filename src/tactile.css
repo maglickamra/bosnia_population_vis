@@ -23,7 +23,7 @@ body::after{
 :root[data-theme="dark"] body::after{opacity:.2}
 
 /* hand-cut edges on every flat shape */
-.pr b,.rule,.blob svg,.nr .bg,.bar,.wedge{filter:url(#rough)}
+.pr b,.rule,.blob svg,.nr .bg,.bar,.wedge{filter:url(#print)}
 
 .blk{border-top:0;position:relative}
 .blk::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--fg);filter:url(#rough-line);border-radius:3px}
@@ -78,3 +78,16 @@ html,body{overflow-x:clip}
 .tag{transform:rotate(-1.5deg)}
 .hero-side h2{transform:rotate(.6deg)}
 @media (max-width:640px){.hero h1{transform:rotate(-.4deg)}}
+
+/* title always fits its column on one line */
+.hero-top>div:first-child{container-type:inline-size}
+.hero h1{white-space:nowrap;overflow-wrap:normal;font-size:clamp(40px,21cqw,230px)}
+@media (min-width:900px){.hero h1{font-size:clamp(54px,21cqw,230px)}}
+
+/* grainy ink on shapes that also carry numbers: speckle mask, no distortion */
+.stack span,.sbar span,.cv i,.facts li::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='6'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.6 2.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='6'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.6 2.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+.readout::after{filter:url(#print)}
+/* halftone dots on pink wedge side and hero rule */
+.rule{background-image:radial-gradient(circle,#0003 1px,transparent 1.5px);background-size:6px 6px;background-color:var(--hot)}
